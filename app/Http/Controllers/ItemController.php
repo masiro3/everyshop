@@ -18,6 +18,17 @@ class ItemController extends Controller
         $this->middleware('auth');
     }
 
+    public function search()
+    {
+        // 検索一覧取得
+        $items = Item
+            ::where('items.status', 'active')
+            ->select()
+            ->get();
+
+        return view('item.index', compact('items'));
+    }
+
     /**
      * 商品一覧
      */
