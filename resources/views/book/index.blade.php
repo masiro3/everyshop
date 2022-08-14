@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', '在庫一覧')
+@section('title', '本の商品一覧')
 
 @section('content_header')
     <h1>本の商品一覧</h1>
@@ -47,10 +47,21 @@
                                     <td>{{ $book->title }}</td>
                                     <td>{{ $book->price }}</td>
                                     <td>{{ $book->stock }}</td>
-                                    <td>販売数</td>
-                                    <td>納品数</td>
-                                    <td>編集</td>
-                                    <td>消除</td>
+                                    <td>
+                                        <form action="/books/stock/minus/{{$book->id}}" method="post">
+                                            @csrf
+                                            <input type="number" name="number" step="1" min="0" max="10000">
+                                            <button type="submit">販売数</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="/books/stock/plus/{{$book->id}}" method="post">
+                                            @csrf
+                                            <input type="number" name="number" step="1" min="0" max="10000">
+                                            <button type="submit">納品数</button>
+                                        </form>
+                                    </td>
+                                    <td><a href="books/edit/{{$book->id}}" type="btn">編集と削除</a></td>
 
                                 </tr>
                             @endforeach

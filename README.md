@@ -33,3 +33,4 @@ $ npm run dev
 ```
 $ php artisan migrate
 ```
+# everyshop

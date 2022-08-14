@@ -23,28 +23,37 @@
                 <form action="{{ url('/books/add')}}" method="POST">
                     @csrf
                     <div class="card-body">
+                        
                         <div class="form-group">
-                            <label for="publisher_id">出版社</label>
-                            <input type="text" class="form-control" id="publisher_id" name="publisher_id" placeholder="出版社">
+                            <label>出版社</label>
+                            <select type="text" class="form-control" name="publisher_id" required>
+                                <option disabled style='display:none;'>選択してください</option>
+                                @foreach($publishers as $publisher)
+                                    <option value="{{ $publisher->id }}"f>{{ $publisher->publisher_name }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">
+                            <label>カテゴリー</label>
+                            <select multiple class="form-control" name="category_id[]" required>
+                                <option disabled style='display:none;'>選択してください</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}"f>{{ $category->category_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        {{-- <div class="form-group">
                             <label for="category_id">カテゴリー</label>
                             <input type="text" class="form-control" id="category_id" name="category_id" placeholder="カテゴリー">
-                        </div>
+                        </div> --}}
 
 
                         <div class="form-group">
                             <label for="title">タイトル</label>
-                            <input type="text" class="form-control" id="title" name="title" placeholder="カテゴリー">
+                            <input type="text" class="form-control" id="title" name="title" placeholder="タイトル">
                         </div>
-   
-                         {{-- <select type="text" class="form-control" name="prefecture_id" required>
-                         <option disabled style='display:none;' @if (empty($post->books)) selected @endif>タイトル選択</option>
-                         @foreach($prefectures as $prefecture)
-                        <option value="{{ $books->id }}" @if (isset($post->books) && ($post->books === books->id)) selected @endif>{{ $books->name }}</option>
-                         @endforeach
-                        </select> --}}
 
                         <div class="form-group">
                             <label for="price">価格(円)</label>

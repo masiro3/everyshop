@@ -19,14 +19,22 @@
                 </div>
             @endif
 
-            <div>
-                <form action="{{ route('books.index') }}" method="GET">
-                  <input type="text" name="keyword" value="{{ $keyword }}">
-                  <input type="submit" value="検索">
+                @section('content')
+                
+                <form action="/books/search" method="post">
+                    @csrf
+                    <input type="search" placeholder="キーワード入力" name="search" value="{{ $keyword }}">
+                    <div>
+                        <button type="submit">検索</button>
+                        <button>
+                            <a href="/books/search">クリア</a>
+                        </button>
+                    </div>
                 </form>
-            </div>
-
-
+                @if(isset($keyword))
+                <p>{{$keyword->getData()}}</p>
+                @endif
+                
         </div>
     </div>
 @stop
@@ -36,4 +44,3 @@
 
 @section('js')
 @stop
-
