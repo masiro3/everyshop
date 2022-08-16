@@ -1,39 +1,63 @@
-@extends('adminlte::page')
 
-@section('title', '本の商品検索')
 
-@section('content_header')
-    <h1>本の商品検索</h1>
-@stop
+                @extends('adminlte::page')
 
-@section('content')
-    <div class="row">
-        <div class="col-md-10">
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                       @foreach ($errors->all() as $error)
-                          <li>{{ $error }}</li>
-                       @endforeach
-                    </ul>
-                </div>
-            @endif
-
+                @section('title', '本の商品一覧検索')
+                
+                @section('content_header')
+                    <h1>本の商品一覧検索</h1>
+                @stop
+                
                 @section('content')
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    
+                                    <div class="card-tools">
+                                        <div class="input-group input-group-sm">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                 <div class="card-body table-responsive p-0">
                 
                 <form action="/books/search" method="post">
                     @csrf
-                    <input type="search" placeholder="キーワード入力" name="search" value="{{ $keyword }}">
+                    <div>出版社・カテゴリー・タイトル検索</div>
+                    <input type="search" placeholder="キーワード入力" name="keyword"  value="{{ $keyword }}">
                     <div>
                         <button type="submit">検索</button>
-                        <button>
-                            <a href="/books/search">クリア</a>
-                        </button>
                     </div>
                 </form>
-                @if(isset($keyword))
-                <p>{{$keyword->getData()}}</p>
-                @endif
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>出版社</th>
+                                <th>カテゴリー</th>
+                                <th>タイトル</th>
+                                <th>価格(円)</th>
+                                <th>在庫数</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                @foreach ($books as $book)
+                <tr>
+                    <td>{{ $book->id }}</td>
+                    <td>{{ $book->publisher_name }}</td>
+                    <td>{{ $book->category_name }}</td>
+                    <td>{{ $book->title }}</td>
+                    <td>{{ $book->price }}</td>
+                    <td>{{ $book->stock }}</td>
+                   
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
                 
         </div>
     </div>

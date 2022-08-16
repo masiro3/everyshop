@@ -11,7 +11,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">本の商品一覧</h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">
@@ -38,12 +37,7 @@
                                 <tr>
                                     <td>{{ $book->id }}</td>
                                     <td>{{ $book->publisher->publisher_name }}</td>
-                                    <td> 
-                                        {{-- @if($book-) --}}
-                                    @foreach ($book->categories as $category)
-                                        {{ $category->category_name }}
-                                    @endforeach 
-                                    </td>
+                                    <td>{{ $book->category->category_name }}</td>
                                     <td>{{ $book->title }}</td>
                                     <td>{{ $book->price }}</td>
                                     <td>{{ $book->stock }}</td>
@@ -61,7 +55,7 @@
                                             <button type="submit">納品数</button>
                                         </form>
                                     </td>
-                                    <td><a href="books/edit/{{$book->id}}" type="btn">編集と削除</a></td>
+                                    <td><a href="books/edit/{{$book->id}}" type="btn" class="btn btn-default">編集・削除</a></td>
 
                                 </tr>
                             @endforeach

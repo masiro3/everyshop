@@ -227,26 +227,16 @@ return [
     'menu' => [
         [
             'text' => '商品一覧',
-            'url'  => 'items',
-            'icon' => 'fas fa-gamepad',
-        ],
-        [
-            'text' => '商品登録',
-            'url'  => 'items/add',
-            'icon' => 'fas fa-gamepad',
-        ],
-        [
-            'text' => '本の商品一覧',
             'url'  => 'books',
             'icon' => 'fas fa-gamepad',
         ],
         [
-            'text' => '本の登録',
+            'text' => '商品登録',
             'url'  => 'books/add',
             'icon' => 'fas fa-gamepad',
         ],
         [
-            'text' => '本の在庫検索',
+            'text' => '商品検索',
             'url'  => 'books/search',
             'icon' => 'fas fa-gamepad',
         ],

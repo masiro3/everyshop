@@ -9,11 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Category extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'category_name',
+    ];
 
     protected $guarded = ['id'];
     
-    public function books(): BelongsToMany
+    public function books()
     {
-        return $this->belongsToMany(Book::class);
+        return $this->hasMany(Book::class);
     }
 }

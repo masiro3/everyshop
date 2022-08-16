@@ -27,28 +27,22 @@
                         <div class="form-group">
                             <label>出版社</label>
                             <select type="text" class="form-control" name="publisher_id" required>
-                                <option disabled style='display:none;'>選択してください</option>
+                                <option disabled style='display:none;'></option>
                                 @foreach($publishers as $publisher)
-                                    <option value="{{ $publisher->id }}"f>{{ $publisher->publisher_name }}</option>
+                                    <option value="{{ $publisher->id }}">{{ $publisher->publisher_name }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label>カテゴリー</label>
-                            <select multiple class="form-control" name="category_id[]" required>
-                                <option disabled style='display:none;'>選択してください</option>
+                            <select  class="form-control" name="category_id" required>
+                                <option disabled style='display:none;'></option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}"f>{{ $category->category_name }}</option>
+                                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                 @endforeach
                             </select>
                         </div>
-
-                        {{-- <div class="form-group">
-                            <label for="category_id">カテゴリー</label>
-                            <input type="text" class="form-control" id="category_id" name="category_id" placeholder="カテゴリー">
-                        </div> --}}
-
 
                         <div class="form-group">
                             <label for="title">タイトル</label>
@@ -57,12 +51,12 @@
 
                         <div class="form-group">
                             <label for="price">価格(円)</label>
-                            <input type="number" class="form-control" id="price" name="price" placeholder="価格">
+                            <input type="number" min="0" class="form-control" id="price" name="price" placeholder="価格">
                         </div>
 
                         <div class="form-group">
-                            <label for="stock">納品数</label>
-                            <input type="number" class="form-control" id="stock" name="stock" placeholder="納品数(増えた在庫数)">
+                            <label for="stock">在庫数</label>
+                            <input type="number" min="0" class="form-control" id="stock" name="stock" placeholder="納品数(増えた在庫数)">
                         </div>
                     </div>
 

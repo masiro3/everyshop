@@ -21,6 +21,7 @@ class CreateItemsTable extends Migration
             $table->smallInteger('type')->nullable();
             $table->string('detail', 500)->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

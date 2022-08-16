@@ -43,4 +43,13 @@ class HomeController extends Controller
         return view('home', ["home" => $home]); // homeにデータを渡す
     }
 
+    public function homeDelete(Request $request,$id){
+        $home = \App\Models\Home::find($id);
+        $home->delete();
+
+        return redirect('/');
+    }
+
+
+
 }

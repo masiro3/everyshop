@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
+use Illuminate\Support\Facades\DB;
 
 
 class BookController extends Controller
@@ -28,23 +29,17 @@ class BookController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->input('keyword');
+        $books = Book::Join('categories', 'books.category_id', '=', 'categories.id')
+           ->Join('publishers', 'books.publisher_id', '=', 'publishers.id')
+           ->where(function($query) use($keyword){
+            $query->where('title', 'LIKE', "%{$keyword}%") 
+                ->orWhere('publisher_name', 'LIKE', "%{$keyword}%")
+                ->orWhere('category_name', 'LIKE', "%{$keyword}%");
+           })
+           ->select('books.*','categories.category_name','publishers.publisher_name')
+           ->get();
 
-        $query = Book::query();
-
-        if(!empty($keyword)) {
-            $query->where('title', 'LIKE', "%{$keyword}%")
-                ->orWhere('stock', 'LIKE', "%{$keyword}%")
-                ->orWhere('price', 'LIKE', "%{$keyword}%")
-                ->orWhere('publisher_name', 'LIKE', "%{$keyword}%");
-                // ->orWhere('category_name', 'LIKE', "%{$keyword}%");
-                
-               
-             
-        }
-
-        $books = $query->get();
-
-        return view('book.search', compact('query', 'keyword'));
+        return view('book.search', compact('books', 'keyword'));
     }
 
     /**
@@ -64,17 +59,22 @@ class BookController extends Controller
     public function add(Request $request)
     {
         if ($request->isMethod('post')) {
-                
-            $book = Book::create([
+            $request->validate([
+                'category_id' => 'required',
+                'publisher_id' => 'required',
+                'stock' => 'required',
+                'title' => 'required',
+                'price' => 'required',
+            ]);
+            
+            $request->user()->books()->create([
+                'category_id' => $request->publisher_id,
                 'publisher_id' => $request->publisher_id,
                 'title' => $request->title,
                 'price' => $request->price,
                 'stock' => $request->stock,
-            ]);
-            if(is_array($request->category_id)){
-                $book->categories()->sync($request->category_id);
-            };
-
+             ]);
+         
             return redirect('/books');
             
         }else{
@@ -115,14 +115,14 @@ class BookController extends Controller
 
         $publishers = Publisher::all();
         $categories = Category::all();
-        $book_category_ids= array_column($book->categories->toArray(), 'id');
+        
 
         return view('book.edit')
         ->with([
             'book' => $book,
             'publishers' =>  $publishers,
             'categories' =>  $categories,
-            'book_category_ids' =>  $book_category_ids,
+            
 
         ]);
     }
@@ -133,15 +133,21 @@ class BookController extends Controller
      */
     public function bookEdit(Request $request){
         $book = \App\Models\Book::where('id', '=', $request->id)->first();
+        $request->validate([
+            'category_id' => 'required',
+            'publisher_id' => 'required',
+            'stock' => 'required',
+            'title' => 'required',
+            'price' => 'required',
+        ]);
+
         $book->publisher_id = $request->publisher_id;
+        $book->category_id = $request->category_id;
         $book->title = $request->title;
         $book->price = $request->price;
         $book->stock = $request->stock;
         $book->save(); 
 
-        if(is_array($request->category_id)){
-            $book->categories()->sync($request->category_id);
-        }
         return redirect('/books');
     }
 
@@ -161,9 +167,16 @@ class BookController extends Controller
     public function minus(Request $request,$id){
         $book = \App\Models\Book::find($id);
         $book->stock = $book->stock - $request->number;
+        if($book->stock < 0){
+            $book->stock = 0;
+        }
         $book->save();
 
         return redirect('/books');
+
+      
+
+        
     }
 
     /**

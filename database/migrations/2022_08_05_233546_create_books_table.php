@@ -19,8 +19,12 @@ class CreateBooksTable extends Migration
                 $table->integer('stock');
                 $table->integer('price');
                 $table->unsignedBigInteger('publisher_id'); # 外部キー
-                $table->foreign('publisher_id')->references('id')->on('publishers'); 
+                $table->unsignedBigInteger('category_id'); # 外部キー
+                $table->bigInteger('user_id')->unsigned()->index();
+                $table->foreign('publisher_id')->references('id')->on('publishers');
+                $table->foreign('category_id')->references('id')->on('categories');
                 $table->timestamps();
+                $table->foreign('user_id')->references('id')->on('users');
 
         });
     }
