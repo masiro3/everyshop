@@ -14,12 +14,12 @@
     <title>掲示板</title>
 </head>
 <body>
-
-<h1>掲示板</h1>
+<h1>本の在庫管理</h1>
+<h3>掲示板</h3>
 
 <!-- エラーメッセージエリア -->
 @if ($errors->any())
-    <h2>エラーメッセージ</h2>
+    <h5>エラーメッセージ</h5>
     <ul>
         @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>

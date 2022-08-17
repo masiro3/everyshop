@@ -159,6 +159,7 @@ return [
         'title' => 'タイトル',
         'stock' => '在庫数',
         'price' => '価格(円)',
+        'comment' => 'コメント',
 
     ],
 
