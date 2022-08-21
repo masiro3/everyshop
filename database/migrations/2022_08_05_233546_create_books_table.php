@@ -15,7 +15,7 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
                 $table->id();
-                $table->string('title');
+                $table->string('title')->chartset("utf8");
                 $table->integer('stock');
                 $table->integer('price');
                 $table->unsignedBigInteger('publisher_id'); # 外部キー

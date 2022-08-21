@@ -15,7 +15,7 @@ class CreateHomesTable extends Migration
     {
         Schema::create('homes', function (Blueprint $table) {
             $table->id();
-            $table->string('comment');
+            $table->string('comment')->chartset("utf8");
             $table->timestamps();
         });
     }
