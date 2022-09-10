@@ -34,7 +34,7 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                
                                 <th>出版社</th>
                                 <th>カテゴリー</th>
                                 <th>タイトル</th>
@@ -46,7 +46,7 @@
                         <tbody>
                 @foreach ($books as $book)
                 <tr>
-                    <td>{{ $book->id }}</td>
+                    
                     <td>{{ $book->publisher_name }}</td>
                     <td>{{ $book->category_name }}</td>
                     <td>{{ $book->title }}</td>
